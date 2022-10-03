@@ -1,4 +1,4 @@
 ### RTChat
 
-A project to study using Firebase alongside with Flutter.
+A project to study using Google Firebase and Firestore alongside with Flutter.
 
