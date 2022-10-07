@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
+import "login.dart";
 
 class HomeScreen extends StatefulWidget{
   @override
@@ -24,12 +24,12 @@ class _HomeScreen extends State<HomeScreen>{
             child: Column(
               children: [
                 Container(
-                  margin:EdgeInsets.all(25),
+                  margin:EdgeInsets.all(15),
                   height:screenHeight/3.5,
                   child:Image.asset("assets/images/rtchat.png")
                 ),
                 Container(
-                  margin:EdgeInsets.only(bottom:40),
+                  margin:EdgeInsets.only(bottom:30),
                   child: Text("Create an account", style:GoogleFonts.secularOne(
                     fontSize: 30,
                     color: Colors.purple
@@ -80,7 +80,7 @@ class _HomeScreen extends State<HomeScreen>{
                       hintStyle:TextStyle(
                         color:Colors.purple
                       ),
-                      hintText:"Type your password...",
+                      hintText:"Type a password...",
                       prefixIcon: Container(
                         margin:EdgeInsets.only(right: 10),
                         child: Icon(Icons.lock, color:Colors.purple)
@@ -90,8 +90,7 @@ class _HomeScreen extends State<HomeScreen>{
                 ),
                 Container(
                   margin:EdgeInsets.only(
-                    top:20,
-                    bottom:20
+                    top:20
                   ),
                   child:ElevatedButton(
                     style:ElevatedButton.styleFrom(
@@ -105,14 +104,15 @@ class _HomeScreen extends State<HomeScreen>{
                 ),
                 TextButton(
                   onPressed:(){
-
+                    Navigator.pushNamed(context, "/login");
                   },
                   child:Container(
+                    margin:EdgeInsets.only(top:10),
                     width:screenWidth/1.5,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Already has an account?", style:TextStyle(
+                        Text("Already have an account?", style:TextStyle(
                           color:Colors.purple,
                         )),
                         SizedBox(width:10),

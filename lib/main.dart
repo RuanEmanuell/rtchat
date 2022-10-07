@@ -5,6 +5,7 @@ import 'firebase_options.dart';
 
 
 import "screens/home.dart";
+import "screens/login.dart";
 
 
 Future<void> main() async {
@@ -12,7 +13,8 @@ Future<void> main() async {
   runApp(MaterialApp(
     initialRoute:"/home",
     routes:{
-      "/home":(context)=>HomeScreen()
+      "/home":(context)=>HomeScreen(),
+      "/login":(context)=>LoginScreen()
     }
   ));
 await Firebase.initializeApp(
