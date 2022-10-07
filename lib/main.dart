@@ -19,11 +19,11 @@ await Firebase.initializeApp(
   options: DefaultFirebaseOptions.currentPlatform,
 );
 
-   var collection2=FirebaseFirestore.instance.collection("pinto");
+   var collection2=FirebaseFirestore.instance.collection("testando");
 
   collection2.doc().set(
     {
-      "pinto":"penis"
+      "teste":"tres"
     }
   );
 
