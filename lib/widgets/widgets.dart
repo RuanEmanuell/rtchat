@@ -48,8 +48,12 @@ class Inputs extends StatefulWidget{
   var passwordText;
   var emailController;
   var passwordController;
+  var passwordInvisible;
+  var validator;
+  var formKey;
 
-  Inputs({this.emailText, this.passwordText, this.emailController, this.passwordController});
+  Inputs({this.emailText, this.passwordText, this.emailController, 
+  this.passwordController, this.passwordInvisible, this.validator, this.formKey});
 
   @override
   _Inputs createState()=> _Inputs();
@@ -58,64 +62,79 @@ class Inputs extends StatefulWidget{
 class _Inputs extends State<Inputs>{
   @override
   Widget build(BuildContext context){
-    return Column(
-      children: [
-        Container(
-                margin:EdgeInsets.only(
-                right:20,
-                left:20,
-                bottom:10),
-                child:TextFormField(
-                controller:widget.emailController,
-                style:TextStyle(
-                color:Color.fromARGB(255, 238, 54, 177),
-                ),
-                decoration:InputDecoration(
-                enabledBorder:UnderlineInputBorder(
-                borderSide:BorderSide(color: Colors.purple)
-                ),
-                focusedBorder:UnderlineInputBorder(
-                borderSide:BorderSide(color: Colors.purple)
-                ),   
-                hintStyle:TextStyle(
-                color:Colors.purple
-                ),
-                hintText:widget.emailText,
-                prefixIcon: Container(
-                margin:EdgeInsets.only(right: 10),
-                child: Icon(Icons.email, color:Colors.purple)
-                )
-               )
-             )
-           ),
-                           Container(
+    return Form(
+      key:widget.formKey,
+      child: Column(
+        children: [
+          Container(
                   margin:EdgeInsets.only(
-                    right:20,
-                    left:20),
+                  right:20,
+                  left:20,
+                  bottom:10),
                   child:TextFormField(
-                    controller:widget.passwordController,
-                    style:TextStyle(
-                      color:Color.fromARGB(255, 238, 54, 177),
-                    ),
-                    decoration:InputDecoration(
-                      enabledBorder:UnderlineInputBorder(
-                        borderSide:BorderSide(color: Colors.purple)
+                  controller:widget.emailController,
+                  validator:widget.validator,
+                  style:TextStyle(
+                  color:Color.fromARGB(255, 238, 54, 177),
+                  ),
+                  decoration:InputDecoration(
+                  enabledBorder:UnderlineInputBorder(
+                  borderSide:BorderSide(color: Colors.purple)
+                  ),
+                  focusedBorder:UnderlineInputBorder(
+                  borderSide:BorderSide(color: Colors.purple)
+                  ),   
+                  hintStyle:TextStyle(
+                  color:Colors.purple
+                  ),
+                  hintText:widget.emailText,
+                  prefixIcon: Container(
+                  margin:EdgeInsets.only(right: 10),
+                  child: Icon(Icons.email, color:Colors.purple)
+                  )
+                 )
+               )
+             ),
+                             Container(
+                    margin:EdgeInsets.only(
+                      right:20,
+                      left:20),
+                    child:TextFormField(
+                      controller:widget.passwordController,
+                      validator:widget.validator,
+                      obscureText: widget.passwordInvisible,
+                      style:TextStyle(
+                        color:Color.fromARGB(255, 238, 54, 177),
                       ),
-                      focusedBorder:UnderlineInputBorder(
-                        borderSide:BorderSide(color: Colors.purple)
-                      ),                   
-                      hintStyle:TextStyle(
-                        color:Colors.purple
-                      ),
-                      hintText:widget.passwordText,
-                      prefixIcon: Container(
-                        margin:EdgeInsets.only(right: 10),
-                        child: Icon(Icons.lock, color:Colors.purple)
+                      decoration:InputDecoration(
+                        enabledBorder:UnderlineInputBorder(
+                          borderSide:BorderSide(color: Colors.purple)
+                        ),
+                        focusedBorder:UnderlineInputBorder(
+                          borderSide:BorderSide(color: Colors.purple)
+                        ),                   
+                        hintStyle:TextStyle(
+                          color:Colors.purple
+                        ),
+                        hintText:widget.passwordText,
+                        prefixIcon: Container(
+                          margin:EdgeInsets.only(right: 10),
+                          child: Icon(Icons.lock, color:Colors.purple)
+                        ),
+                        suffixIcon: IconButton(
+                          onPressed:(){
+                            setState((){
+                              widget.passwordInvisible=!widget.passwordInvisible;
+                            });
+                          },
+                          icon:Icon(widget.passwordInvisible ? 
+                          Icons.visibility_off : Icons.visibility, color:Colors.purple)
+                        )
                       )
                     )
                   )
-                )
-      ]
+        ]
+      ),
     );
   }
 }

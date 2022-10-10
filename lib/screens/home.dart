@@ -26,13 +26,19 @@ class _HomeScreen extends State<HomeScreen>{
 
     TextEditingController emailController=TextEditingController();
     TextEditingController passwordController=TextEditingController();
+    final formKey=GlobalKey<FormState>();
 
     Future createAccountAction() async{
+
+      final isValid=formKey.currentState!.validate();
+
+      if(isValid){
 
       setState((){
         loading=true;
       });
 
+      
       try{
         FirebaseAuth.instance.createUserWithEmailAndPassword(
         email:emailController.text.trim(),
@@ -47,6 +53,7 @@ class _HomeScreen extends State<HomeScreen>{
 
       } on FirebaseAuthException catch(e){
         print(e);
+      }
       }
     }
 
@@ -67,10 +74,14 @@ class _HomeScreen extends State<HomeScreen>{
                   Logo(height: screenHeight, width:screenWidth),
                   MainText(text:"Create an Account", fontSize:30),
                   Inputs(
+                    formKey:formKey,
                     emailController: emailController,
                     passwordController: passwordController,
+                    passwordInvisible: true,
                     emailText: "Type an email...",
-                    passwordText:"Type an password..."
+                    passwordText:"Type an password...",
+                    validator:(value) => value!=null && value.length < 6 ?
+                     "You need a password with at least 6 characters and a valid email" : null
                   ),
                   MainButton(
                     buttonText: "Create account",

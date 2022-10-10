@@ -23,8 +23,15 @@ class _LoginScreen extends State<LoginScreen>{
     TextEditingController emailController=TextEditingController();
     TextEditingController passwordController=TextEditingController();
 
+    final formKey=GlobalKey<FormState>();
+
+
    Future loginAction() async{
 
+    
+      final isValid=formKey.currentState!.validate();
+
+      if(isValid){
       setState((){
         loading=true;
       });
@@ -43,6 +50,7 @@ class _LoginScreen extends State<LoginScreen>{
         });
         }on FirebaseAuthException catch(e){
           print(e);
+      }
       }
       
       }
@@ -69,8 +77,11 @@ class _LoginScreen extends State<LoginScreen>{
                 Inputs(
                   emailController: emailController,
                   passwordController: passwordController,
+                  passwordInvisible: true,
                   emailText: "Type your email...",
                   passwordText:"Type your password...",
+                  validator:(value) => value!=null && value.length < 6 ?
+                  "You need a password with at least 6 characters and a valid email" : null
                 ),
                  Container(
                   margin:EdgeInsets.only(left: 200),
