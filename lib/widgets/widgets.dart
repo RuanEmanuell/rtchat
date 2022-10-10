@@ -3,15 +3,18 @@ import 'package:google_fonts/google_fonts.dart';
 
 class Logo extends StatelessWidget{
   Logo({
-    this.height
+    this.height,
+    this.width
   });
 
   var height;
+  var width;
 
   @override
   Widget build(BuildContext context){
     return Container(
-            margin:EdgeInsets.all(15),
+            margin:EdgeInsets.only(top: 50),
+            width:width/1.25,
             height:height/3.5,
             child:Image.asset("assets/images/rtchat.png")
            );
@@ -150,9 +153,7 @@ class SecondaryButton extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return    TextButton(
-                  onPressed:(){
-                    Navigator.pushNamed(context, "/login");
-                  },
+                  onPressed:secondaryButtonAction,
                   child:Container(
                     margin:EdgeInsets.only(top:10),
                     width:width/1.5,

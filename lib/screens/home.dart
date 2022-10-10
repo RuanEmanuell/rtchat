@@ -32,7 +32,7 @@ class _HomeScreen extends State<HomeScreen>{
             width:screenWidth,
             child: Column(
               children: [
-                Logo(height: screenHeight),
+                Logo(height: screenHeight, width:screenWidth),
                 MainText(text:"Create an Account"),
                 Inputs(
                   emailText: "Type an email...",
