@@ -23,17 +23,19 @@ class Logo extends StatelessWidget{
 
 class MainText extends StatelessWidget{
   MainText({
-    this.text
+    this.text,
+    required this.fontSize
   });
 
   var text;
+  double fontSize;
 
   @override
   Widget build(BuildContext context){
     return Container(
             margin:EdgeInsets.only(bottom:30),
             child: Text(text, style:GoogleFonts.secularOne(
-            fontSize: 30,
+            fontSize: fontSize,
             color: Colors.purple
              ))
             );

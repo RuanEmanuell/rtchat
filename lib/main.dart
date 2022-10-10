@@ -4,8 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import "screens/home.dart";
 import "screens/login.dart";
-import "screens/chat.dart";
 import "screens/auth.dart";
+import "screens/forgot.dart";
+import "screens/chat.dart";
 
 
 Future<void> main() async {
@@ -17,8 +18,10 @@ Future<void> main() async {
       "/main":(context)=>MainScreen(),
       "/home":(context)=>HomeScreen(loginScreenAction: () {  },),
       "/login":(context)=>LoginScreen(homeScreenAction: () {  },),
+      "/auth":(context)=>AuthScreen(),
+      "/forgot":(context)=>ForgotPasswordScreen(),
       "/chat":(context) => ChatScreen(),
-      "/auth":(context)=>AuthScreen()
+
     }
     
   ));
@@ -36,6 +39,10 @@ class MainScreen extends StatelessWidget{
         builder:(context, snapshot) {
           if(snapshot.hasData){
             return ChatScreen();
+          }else if(snapshot.hasError){
+            return Center(child: Text("Something gone wrong"));
+          }else if(snapshot.connectionState==ConnectionState.waiting){
+            return Center(child:CircularProgressIndicator());
           }else{
             return AuthScreen();
           }

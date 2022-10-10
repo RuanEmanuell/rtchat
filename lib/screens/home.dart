@@ -22,14 +22,32 @@ class HomeScreen extends StatefulWidget{
 
 class _HomeScreen extends State<HomeScreen>{
 
+    bool loading=false;
+
     TextEditingController emailController=TextEditingController();
     TextEditingController passwordController=TextEditingController();
 
     Future createAccountAction() async{
-      FirebaseAuth.instance.createUserWithEmailAndPassword(
+
+      setState((){
+        loading=true;
+      });
+
+      try{
+        FirebaseAuth.instance.createUserWithEmailAndPassword(
         email:emailController.text.trim(),
         password:passwordController.text.trim(),
       );
+
+        Future.delayed(Duration(seconds: 1), (){
+         setState((){
+          loading=false;
+        });         
+        });
+
+      } on FirebaseAuthException catch(e){
+        print(e);
+      }
     }
 
   @override
@@ -37,38 +55,38 @@ class _HomeScreen extends State<HomeScreen>{
     var screenHeight=MediaQuery.of(context).size.height;
     var screenWidth=MediaQuery.of(context).size.width;
     return Scaffold(
-      body:Center(
-        child:ListView(
-          children: [
-            Container(
-            color:Color.fromARGB(26, 155, 39, 176),
-            height:screenHeight,
-            width:screenWidth,
-            child: Column(
-              children: [
-                Logo(height: screenHeight, width:screenWidth),
-                MainText(text:"Create an Account"),
-                Inputs(
-                  emailController: emailController,
-                  passwordController: passwordController,
-                  emailText: "Type an email...",
-                  passwordText:"Type an password..."
-                ),
-                MainButton(
-                  buttonText: "Create account",
-                  buttonAction: createAccountAction,
-                ),
-                SecondaryButton(
-                  width:screenWidth,
-                  secondaryButtonAction: widget.loginScreenAction,
-                  text: "Already have an account?",
-                  secondaryText: "Sign in"
-                )
-              ],
-            ),
+      body:Container(
+        color:Color.fromARGB(26, 155, 39, 176),
+        height:screenHeight,
+        width:screenWidth,
+        child: Center(
+          child:loading ? CircularProgressIndicator(color:Colors.purple) : ListView(
+            children: [
+              Column(
+                children: [
+                  Logo(height: screenHeight, width:screenWidth),
+                  MainText(text:"Create an Account", fontSize:30),
+                  Inputs(
+                    emailController: emailController,
+                    passwordController: passwordController,
+                    emailText: "Type an email...",
+                    passwordText:"Type an password..."
+                  ),
+                  MainButton(
+                    buttonText: "Create account",
+                    buttonAction: createAccountAction,
+                  ),
+                  SecondaryButton(
+                    width:screenWidth,
+                    secondaryButtonAction: widget.loginScreenAction,
+                    text: "Already have an account?",
+                    secondaryText: "Sign in"
+                  )
+                ],
+              )
+            ]
           )
-          ]
-        )
+        ),
       )
     );
   }
