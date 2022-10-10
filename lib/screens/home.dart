@@ -9,6 +9,13 @@ import "../main.dart";
 import "../widgets/widgets.dart";
 
 class HomeScreen extends StatefulWidget{
+
+  final VoidCallback loginScreenAction;
+
+  HomeScreen({
+    required this.loginScreenAction,
+  });
+
   @override
   _HomeScreen createState()=> _HomeScreen();
 }
@@ -23,10 +30,6 @@ class _HomeScreen extends State<HomeScreen>{
         email:emailController.text.trim(),
         password:passwordController.text.trim(),
       );
-    }
-
-    void loginScreenAction(){
-      Navigator.pushNamed(context, "/login");
     }
 
   @override
@@ -57,7 +60,7 @@ class _HomeScreen extends State<HomeScreen>{
                 ),
                 SecondaryButton(
                   width:screenWidth,
-                  secondaryButtonAction: loginScreenAction,
+                  secondaryButtonAction: widget.loginScreenAction,
                   text: "Already have an account?",
                   secondaryText: "Sign in"
                 )
