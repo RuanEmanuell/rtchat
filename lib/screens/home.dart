@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import "package:firebase_core/firebase_core.dart";
+import "package:cloud_firestore/cloud_firestore.dart";
+import '../firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import "dart:async";
 
+import "../main.dart";
 import "../widgets/widgets.dart";
 
 class HomeScreen extends StatefulWidget{
@@ -10,8 +15,14 @@ class HomeScreen extends StatefulWidget{
 
 class _HomeScreen extends State<HomeScreen>{
 
-    void createAccountAction(){
+    TextEditingController emailController=TextEditingController();
+    TextEditingController passwordController=TextEditingController();
 
+    Future createAccountAction() async{
+      FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email:emailController.text.trim(),
+        password:passwordController.text.trim(),
+      );
     }
 
     void loginScreenAction(){
@@ -35,6 +46,8 @@ class _HomeScreen extends State<HomeScreen>{
                 Logo(height: screenHeight, width:screenWidth),
                 MainText(text:"Create an Account"),
                 Inputs(
+                  emailController: emailController,
+                  passwordController: passwordController,
                   emailText: "Type an email...",
                   passwordText:"Type an password..."
                 ),
@@ -48,7 +61,6 @@ class _HomeScreen extends State<HomeScreen>{
                   text: "Already have an account?",
                   secondaryText: "Sign in"
                 )
-
               ],
             ),
           )

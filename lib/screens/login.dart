@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import "../widgets/widgets.dart";
-import "home.dart";
+
 
 class LoginScreen extends StatefulWidget{
   @override
@@ -10,9 +10,16 @@ class LoginScreen extends StatefulWidget{
 }
 
 class _LoginScreen extends State<LoginScreen>{
-  void loginAction(){
 
-  }
+    TextEditingController emailController=TextEditingController();
+    TextEditingController passwordController=TextEditingController();
+
+    Future loginAction() async{
+      FirebaseAuth.instance.signInWithEmailAndPassword(
+        email:emailController.text.trim(),
+        password:passwordController.text.trim(),
+      );
+    }
 
   void homeScreenAction(){
     Navigator.pop(context);
@@ -37,8 +44,10 @@ class _LoginScreen extends State<LoginScreen>{
                   Logo(height: screenHeight, width:screenWidth),
                   MainText(text:"Welcome back!"),
                   Inputs(
+                    emailController: emailController,
+                    passwordController: passwordController,
                     emailText: "Type your email...",
-                    passwordText:"Type your password..."
+                    passwordText:"Type your password...",
                   ),
                    Container(
                     margin:EdgeInsets.only(left: 200),
