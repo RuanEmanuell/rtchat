@@ -26,12 +26,15 @@ class _LoginScreen extends State<LoginScreen>{
     final formKey=GlobalKey<FormState>();
 
 
-   Future loginAction() async{
-
-    
+    Future loginAction() async{
+      
       try{
+        
+      setState((){
+        loading=true;
+      });
 
-        FirebaseAuth.instance.signInWithEmailAndPassword(
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
         email:emailController.text.trim(),
         password:passwordController.text.trim(),
       );
@@ -41,16 +44,22 @@ class _LoginScreen extends State<LoginScreen>{
           loading=false;
         });         
         });
-        }on FirebaseAuthException catch(e){
+
+
+      } on FirebaseAuthException catch(e){
           ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            backgroundColor:Colors.red,         
-            content:Text(e.message!)
+            backgroundColor:Colors.red,
+            content:Text(e.message=="Given String is empty or null" ? 
+            "One or more fields are empty" : e.message!)
             )
-    )     ;
-      }
+            );
+       setState((){
+          loading=false;
+        });    
       
       }
+    }
 
   
 
@@ -67,39 +76,47 @@ class _LoginScreen extends State<LoginScreen>{
         child: Center(
           child:loading ? CircularProgressIndicator(color:Colors.purple) : ListView(
           children: [
-            Column(
-              children: [
-                Logo(height: screenHeight, width:screenWidth),
-                MainText(text:"Welcome back!", fontSize:30),
-                Inputs(
-                  emailController: emailController,
-                  passwordController: passwordController,
-                  passwordInvisible: true,
-                  emailText: "Type your email...",
-                  passwordText:"Type your password..."
-                ),
-                 Container(
-                  margin:EdgeInsets.only(left: 200),
-                  child:TextButton(
-                    onPressed:(){
-                      Navigator.pushNamed(context, "/forgot");
-                    },
-                    child:Text("Forgot your password?", style:TextStyle(
-                      color:Colors.deepPurple
-                    ))
+            Stack(
+              children:[
+                Column(
+                children: [
+                  Logo(height: screenHeight, width:screenWidth),
+                  MainText(text:"Welcome back!", fontSize:30),
+                  Inputs(
+                    emailController: emailController,
+                    passwordController: passwordController,
+                    passwordInvisible: true,
+                    emailText: "Type your email...",
+                    passwordText:"Type your password..."
+                  ),
+                   Container(
+                    margin:EdgeInsets.only(left: 200),
+                    child:TextButton(
+                      onPressed:(){
+                        Navigator.pushNamed(context, "/forgot");
+                      },
+                      child:Text("Forgot your password?", style:TextStyle(
+                        color:Colors.deepPurple
+                      ))
+                    )
+                  ),
+                  MainButton(
+                    buttonText: "Log in",
+                    buttonAction: loginAction,
+                  ),
+                  SecondaryButton(
+                    width:screenWidth,
+                    secondaryButtonAction: widget.homeScreenAction,
+                    text: "Don't have an account?",
+                    secondaryText: "Register"
                   )
-                ),
-                MainButton(
-                  buttonText: "Log in",
-                  buttonAction: loginAction,
-                ),
-                SecondaryButton(
-                  width:screenWidth,
-                  secondaryButtonAction: widget.homeScreenAction,
-                  text: "Don't have an account?",
-                  secondaryText: "Register"
-                )
-              ],
+                ],
+              ),
+              IconButton(
+                onPressed:widget.homeScreenAction,
+                icon:Icon(Icons.arrow_back, size:50, color:Colors.purple)
+              )
+              ]
             )
           ]
             )

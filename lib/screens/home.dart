@@ -31,8 +31,6 @@ class _HomeScreen extends State<HomeScreen>{
     Future createAccountAction() async{
 
       final isValid=formKey.currentState!.validate();
-
-      if(isValid){
       
       
       try{
@@ -41,7 +39,7 @@ class _HomeScreen extends State<HomeScreen>{
         loading=true;
       });
 
-        FirebaseAuth.instance.createUserWithEmailAndPassword(
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email:emailController.text.trim(),
         password:passwordController.text.trim(),
       );
@@ -52,15 +50,18 @@ class _HomeScreen extends State<HomeScreen>{
         });         
         });
 
+
       } on FirebaseAuthException catch(e){
-        print("cu");
           ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor:Colors.red,
-            content:Text(e.message!)
+            content:Text(e.message=="Given String is empty or null" ? 
+            "One or more fields are empty" : e.message!)
             )
             );
-      }
+       setState((){
+          loading=false;
+        });    
       }
     }
 
@@ -87,8 +88,6 @@ class _HomeScreen extends State<HomeScreen>{
                     passwordInvisible: true,
                     emailText: "Type an email...",
                     passwordText:"Type an password...",
-                    validator:(value) => value!=null && value.length < 6 ?
-                     "You need a password with at least 6 characters and a valid email" : null
                   ),
                   MainButton(
                     buttonText: "Create account",

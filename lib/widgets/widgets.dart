@@ -49,11 +49,10 @@ class Inputs extends StatefulWidget{
   var emailController;
   var passwordController;
   var passwordInvisible;
-  var validator;
   var formKey;
 
   Inputs({this.emailText, this.passwordText, this.emailController, 
-  this.passwordController, this.passwordInvisible, this.validator, this.formKey});
+  this.passwordController, this.passwordInvisible, this.formKey});
 
   @override
   _Inputs createState()=> _Inputs();
@@ -73,7 +72,6 @@ class _Inputs extends State<Inputs>{
                   bottom:10),
                   child:TextFormField(
                   controller:widget.emailController,
-                  validator:widget.validator,
                   style:TextStyle(
                   color:Color.fromARGB(255, 238, 54, 177),
                   ),
@@ -101,7 +99,6 @@ class _Inputs extends State<Inputs>{
                       left:20),
                     child:TextFormField(
                       controller:widget.passwordController,
-                      validator:widget.validator,
                       obscureText: widget.passwordInvisible,
                       style:TextStyle(
                         color:Color.fromARGB(255, 238, 54, 177),
