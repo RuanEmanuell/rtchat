@@ -33,13 +33,14 @@ class _HomeScreen extends State<HomeScreen>{
       final isValid=formKey.currentState!.validate();
 
       if(isValid){
-
+      
+      
+      try{
+        
       setState((){
         loading=true;
       });
 
-      
-      try{
         FirebaseAuth.instance.createUserWithEmailAndPassword(
         email:emailController.text.trim(),
         password:passwordController.text.trim(),
@@ -52,7 +53,13 @@ class _HomeScreen extends State<HomeScreen>{
         });
 
       } on FirebaseAuthException catch(e){
-        print(e);
+        print("cu");
+          ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor:Colors.red,
+            content:Text(e.message!)
+            )
+            );
       }
       }
     }

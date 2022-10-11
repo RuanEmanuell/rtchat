@@ -29,13 +29,6 @@ class _LoginScreen extends State<LoginScreen>{
    Future loginAction() async{
 
     
-      final isValid=formKey.currentState!.validate();
-
-      if(isValid){
-      setState((){
-        loading=true;
-      });
-
       try{
 
         FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -49,8 +42,12 @@ class _LoginScreen extends State<LoginScreen>{
         });         
         });
         }on FirebaseAuthException catch(e){
-          print(e);
-      }
+          ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor:Colors.red,         
+            content:Text(e.message!)
+            )
+    )     ;
       }
       
       }
@@ -79,9 +76,7 @@ class _LoginScreen extends State<LoginScreen>{
                   passwordController: passwordController,
                   passwordInvisible: true,
                   emailText: "Type your email...",
-                  passwordText:"Type your password...",
-                  validator:(value) => value!=null && value.length < 6 ?
-                  "You need a password with at least 6 characters and a valid email" : null
+                  passwordText:"Type your password..."
                 ),
                  Container(
                   margin:EdgeInsets.only(left: 200),
