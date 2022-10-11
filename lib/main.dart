@@ -21,10 +21,10 @@ Future<void> main() async {
       "/auth":(context)=>AuthScreen(),
       "/forgot":(context)=>ForgotPasswordScreen(),
       "/chat":(context) => ChatScreen(),
-
     }
     
   ));
+  
 
 
 }

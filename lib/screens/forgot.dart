@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../widgets/widgets.dart';
+import '../widgets/loginwidgets.dart';
 
 class ForgotPasswordScreen extends StatefulWidget{
   @override
