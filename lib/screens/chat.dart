@@ -126,20 +126,25 @@ class _ChatScreen extends State<ChatScreen> {
             margin: EdgeInsets.only(left: screenWidth / 1.2, top: 20),
             child: IconButton(
                 onPressed: () {
+                  
                   var now = DateTime.now();
 
+                  var year=now.year.toString();
+                  var month=now.month<10?"0${now.month.toString()}":now.month.toString();
+                  var day=now.day<10?"0${now.day.toString()}":now.day.toString();                  
+                  var hour=now.hour<10?"0${now.hour.toString()}":now.hour.toString();
+                  var minute=now.minute<10?"0${now.minute.toString()}":now.minute.toString();
+                  var second=now.second<10?"0${now.second.toString()}":now.second.toString();
+
                   if (controller.text.isNotEmpty) {
+
                     messages
-                        .doc(now.year.toString() +
-                            now.month.toString() +
-                            now.day.toString() +
-                            now.hour.toString() +
-                            now.minute.toString() +
-                            now.second.toString())
+                        .doc(year+month+day+hour+minute+second)
                         .set({
                       "message": controller.text,
                       "user": user.email.toString().split("@")[0]
                     });
+
                     controller.text = "";
                   }
                 },
