@@ -12,12 +12,12 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MaterialApp(initialRoute: "/main", routes: {
-    "/main": (context) => MainScreen(),
+    "/main": (context) => const MainScreen(),
     "/home": (context) => HomeScreen(loginScreenAction: () {}),
     "/login": (context) => LoginScreen(homeScreenAction: () {}),
     "/auth": (context) => AuthScreen(),
-    "/forgot": (context) => ForgotPasswordScreen(),
-    "/chat": (context) => ChatScreen(),
+    "/forgot": (context) => const ForgotPasswordScreen(),
+    "/chat": (context) => const ChatScreen(),
   }));
 }
 
@@ -31,7 +31,7 @@ class MainScreen extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return ChatScreen();
+          return const ChatScreen();
         } else if (snapshot.hasError) {
           return const Center(child: Text("Something gone wrong"));
         } else if (snapshot.connectionState == ConnectionState.waiting) {

@@ -6,7 +6,8 @@ import '../widgets/loginwidgets.dart';
 class LoginScreen extends StatefulWidget {
   final VoidCallback homeScreenAction;
 
-  const LoginScreen({super.key, 
+  const LoginScreen({
+    super.key,
     required this.homeScreenAction,
   });
 
@@ -15,7 +16,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreen extends State<LoginScreen> {
-  
   bool loading = false;
 
   TextEditingController emailController = TextEditingController();

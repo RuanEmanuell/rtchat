@@ -7,7 +7,8 @@ import '../widgets/loginwidgets.dart';
 class HomeScreen extends StatefulWidget {
   final VoidCallback loginScreenAction;
 
-  const HomeScreen({super.key, 
+  const HomeScreen({
+    super.key,
     required this.loginScreenAction,
   });
 
@@ -23,7 +24,6 @@ class _HomeScreen extends State<HomeScreen> {
   final formKey = GlobalKey<FormState>();
 
   Future createAccountAction() async {
-
     try {
       setState(() {
         loading = true;

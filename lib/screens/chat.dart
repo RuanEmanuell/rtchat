@@ -12,13 +12,11 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreen extends State<ChatScreen> {
   final CollectionReference messages = FirebaseFirestore.instance.collection("messages");
+
   final Stream<QuerySnapshot> _usersStream =
       FirebaseFirestore.instance.collection("messages").snapshots();
 
-  var message = "a";
-
   TextEditingController controller = TextEditingController();
-  TextEditingController controller2 = TextEditingController();
 
   final user = FirebaseAuth.instance.currentUser!;
 
@@ -88,7 +86,7 @@ class _ChatScreen extends State<ChatScreen> {
       ),
       body: StreamBuilder<QuerySnapshot>(
           stream: _usersStream,
-          builder: (context, snapshot) {
+          builder: (context, snapshot, {orderBy = "date"}) {
             return ListView(
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
               Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
@@ -109,7 +107,7 @@ class _ChatScreen extends State<ChatScreen> {
                                 style: const TextStyle(color: Color.fromARGB(129, 0, 0, 0))),
                             Text(data["message"],
                                 style: const TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 18,
                                 )),
                           ],
                         ))),
@@ -118,17 +116,32 @@ class _ChatScreen extends State<ChatScreen> {
           }),
       bottomNavigationBar: Stack(children: [
         Container(
+            width: screenWidth / 1.3,
             margin: const EdgeInsets.all(20),
             child: TextField(
+                maxLength: 60,
                 controller: controller,
                 decoration: const InputDecoration(border: OutlineInputBorder()))),
         Container(
-            margin: EdgeInsets.only(left: screenWidth / 1.25, top: 20),
+            margin: EdgeInsets.only(left: screenWidth / 1.2, top: 20),
             child: IconButton(
                 onPressed: () {
-                  messages.add(
-                      {"message": controller.text, "user": user.email.toString().split("@")[0]});
-                  controller.text = "";
+                  var now = DateTime.now();
+
+                  if (controller.text.isNotEmpty) {
+                    messages
+                        .doc(now.year.toString() +
+                            now.month.toString() +
+                            now.day.toString() +
+                            now.hour.toString() +
+                            now.minute.toString() +
+                            now.second.toString())
+                        .set({
+                      "message": controller.text,
+                      "user": user.email.toString().split("@")[0]
+                    });
+                    controller.text = "";
+                  }
                 },
                 icon: const Icon(Icons.send, size: 35, color: Colors.purple)))
       ]),
