@@ -9,10 +9,20 @@ class ChatScreen extends StatefulWidget{
   @override
   _ChatScreen createState()=> _ChatScreen();
 
+
+
 }
 
 class _ChatScreen extends State<ChatScreen>{
 
+  final CollectionReference messages=FirebaseFirestore.instance.collection("messages");
+  final Stream<QuerySnapshot>_usersStream=FirebaseFirestore.instance.collection("messages").snapshots();
+
+  var message="a";
+
+ TextEditingController controller=TextEditingController();
+  TextEditingController controller2=TextEditingController();
+ 
  final user=FirebaseAuth.instance.currentUser!;
 
   @override
@@ -41,42 +51,121 @@ class _ChatScreen extends State<ChatScreen>{
               ),
               Expanded(
                 child: Container(
-                  margin:EdgeInsets.only(left: screenWidth/5, top:20),
-                  child: Row(
-                    children: [
-                      IconButton(
+                  margin:EdgeInsets.only(left: screenWidth/4.5, top:20),
+                  child: IconButton(
                         onPressed:(){
-
-                        },
-                        icon:Icon(Icons.search, size:40, color:Colors.white)
-                      ),
-                      IconButton(
-                        onPressed:(){
-                          FirebaseAuth.instance.signOut();
+                          showModalBottomSheet(
+                            context:context,
+                            builder:(context){
+                              return Container(
+                                height:screenHeight/3,
+                                color:Colors.purple,
+                                child:Center(
+                                  child:Column(
+                                    children: [
+                                      Container(
+                                        margin:EdgeInsets.all(30),
+                                        child: Text("Are you sure you want to leave?", style:TextStyle(
+                                          fontSize:22,
+                                          color:Colors.white
+                                        )),
+                                      ),
+                                      Container(
+                                        margin:EdgeInsets.only(top: 20),
+                                        width:screenWidth/3,
+                                        height:screenHeight/9,
+                                        child: ElevatedButton(
+                                          style:TextButton.styleFrom(
+                                            backgroundColor:Colors.pink.shade200
+                                          ),
+                                          onPressed:(){
+                                            FirebaseAuth.instance.signOut();   
+                                            Navigator.pop(context);     
+                                          },
+                                          child:Text("Leave", style:TextStyle(
+                                            fontSize:30
+                                          ))
+                                        ),
+                                      ),
+                                    ],
+                                  )  
+                                )
+                              );
+                            }
+                          );
                         },
                         icon:Icon(Icons.exit_to_app, size:40, color:Colors.white)    
+                      ),     
                       )
+                    )
                     ],
                   ),
                 ),
-              )
-            ],
-          )
-        )
+            
+
       ),
-      body: ListView(
-        children:[
-          Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [ 
-            for(var i=0; i<10; i++)
-            Container(
-              margin:EdgeInsets.all(20),
-              child: Text(user.email!, style:TextStyle(
-                fontSize:20
-              ))
+      body: StreamBuilder<QuerySnapshot>(
+        stream:_usersStream,
+        builder:(context, snapshot) {
+          return ListView(
+            children:snapshot.data!.docs.map((DocumentSnapshot document){
+            Map<String, dynamic> data = document.data()! as Map<String, dynamic>;   
+            return Container(
+              child:Column(
+                children:[
+                  Container(
+                    margin:EdgeInsets.all(20),
+                    width:screenWidth-20,
+                    height:90,
+                    decoration:BoxDecoration(
+                      color:Colors.pink.shade100,
+                      borderRadius:BorderRadius.circular(20)
+                    ),
+                    child: Container(
+                      margin:EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(data["user"]),
+                          Text(data["message"], style:TextStyle(
+                            fontSize:20,
+                          )),
+                        ],
+                      )
+                      )
+                  ),
+                ]
+              )
+            );
+            }
+            ).toList()
+          );
+        }
+      ),
+      bottomNavigationBar:Stack(
+        children: [
+          Container(
+          margin:EdgeInsets.all(20),
+          child:TextField(
+            controller:controller,
+            decoration:InputDecoration(
+              border:OutlineInputBorder()
             )
-          ],
+          )
+        ),
+        Container(
+          margin:EdgeInsets.only(left: screenWidth/1.25, top:20),
+          child:IconButton(
+                            onPressed:(){
+                              messages.add({
+                                "message":controller.text,
+                                "user":user.email.toString().split("@")[0]
+                              });
+                              controller.text="";
+                            },
+                            icon:Icon(Icons.send, size:35, color:Colors.purple)
+                          )
+        
         )
         ]
       ),

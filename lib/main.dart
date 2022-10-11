@@ -8,7 +8,6 @@ import "screens/auth.dart";
 import "screens/forgot.dart";
 import "screens/chat.dart";
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -28,7 +27,6 @@ Future<void> main() async {
 
 
 }
-
 
 class MainScreen extends StatelessWidget{
   @override

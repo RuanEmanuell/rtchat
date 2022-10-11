@@ -42,7 +42,7 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen>{
     return Scaffold(
       appBar:AppBar(
         elevation:0,
-        backgroundColor: Color.fromARGB(26, 155, 39, 176),
+        backgroundColor:Color.fromARGB(26, 155, 39, 176),
         leading:IconButton(
           onPressed:(){
             Navigator.pop(context);
@@ -54,7 +54,7 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen>{
         child: Container(
           width:screenWidth,
           height:screenHeight,
-          color:Color.fromARGB(26, 155, 39, 176),
+        color:Color.fromARGB(26, 155, 39, 176),
           child:Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children:[
