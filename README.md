@@ -1,7 +1,5 @@
 # RTChat
 A project for training the usage of Firebase and Firestore with Flutter, it will be updated in the future
 
-
-
-https://user-images.githubusercontent.com/113607857/195323283-f604e30a-debf-4c48-a20c-9d6f7684e9ce.mp4
+![rtchat](https://user-images.githubusercontent.com/113607857/195323664-47e7cee8-c976-41e2-a26a-b9c8db838eef.gif)
 
