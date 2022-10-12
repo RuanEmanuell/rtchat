@@ -10,7 +10,7 @@ Um projeto pra treinar o uso do Firebase e Firestore junto com o Flutter, é um 
 
 Você precisará de <a href="https://docs.flutter.dev/get-started/install">Flutter</a>, após inicializar em seu emulador ou dispositivo e 
 <a href="https://docs .flutter.dev/get-started/codelab">iniciar um novo projeto do Flutter</a>, você transferirá os arquivos desse repositório
-para a pasta do seu projeto do Flutter. Também será necessário configurar o <a href="https://firebase.flutter.dev/docs/overview">Firebase</a>,
+para a pasta do seu projeto do Flutter. Também será necessário configurar o <a href="https://firebase.flutter.dev/docs/overview">Firebase</a>, 
 já que esse projeto requer Firebase Auth e Firebase Firestore pra funcionar.
 
 
