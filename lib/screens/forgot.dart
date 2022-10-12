@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../widgets/loginwidgets.dart';
 
+//Forgot password screen
+
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
 
@@ -11,6 +13,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
+
   TextEditingController emailController = TextEditingController();
 
   Future resetPassword() async {
@@ -31,6 +34,7 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //Taking the variables of the screen
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -67,6 +71,7 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                             margin: const EdgeInsets.only(right: 10),
                             child: const Icon(Icons.email, color: Colors.purple)))),
               ),
+              //Reset password button
               ElevatedButton(
                   onPressed: () {
                     resetPassword();

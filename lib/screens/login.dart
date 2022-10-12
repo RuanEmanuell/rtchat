@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../widgets/loginwidgets.dart';
 
+//Login screen
 class LoginScreen extends StatefulWidget {
   final VoidCallback homeScreenAction;
 

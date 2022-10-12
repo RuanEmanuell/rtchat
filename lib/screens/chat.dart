@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+//The chat screen
+
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
 
@@ -11,17 +13,19 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreen extends State<ChatScreen> {
+  //Declaring the variables from Firebase
   final CollectionReference messages = FirebaseFirestore.instance.collection("messages");
 
   final Stream<QuerySnapshot> _usersStream =
       FirebaseFirestore.instance.collection("messages").snapshots();
 
-  TextEditingController controller = TextEditingController();
-
   final user = FirebaseAuth.instance.currentUser!;
+
+  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    //Taking the variables of the screen
     var statusBarHeight = MediaQuery.of(context).viewPadding.top;
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
@@ -41,6 +45,7 @@ class _ChatScreen extends State<ChatScreen> {
                           textStyle: const TextStyle(fontSize: 30, color: Colors.white))),
                 ),
               ),
+              //Button for logout
               Expanded(
                   child: Container(
                 margin: EdgeInsets.only(left: screenWidth / 4.5, top: 20),
@@ -84,6 +89,7 @@ class _ChatScreen extends State<ChatScreen> {
           ),
         ),
       ),
+      //Displaying the Firestore data
       body: StreamBuilder<QuerySnapshot>(
           stream: _usersStream,
           builder: (context, snapshot, {orderBy = "date"}) {
@@ -114,6 +120,7 @@ class _ChatScreen extends State<ChatScreen> {
               ]));
             }).toList());
           }),
+      //Send message bar
       bottomNavigationBar: Stack(children: [
         Container(
             width: screenWidth / 1.3,
@@ -137,6 +144,10 @@ class _ChatScreen extends State<ChatScreen> {
                   var second=now.second<10?"0${now.second.toString()}":now.second.toString();
 
                   if (controller.text.isNotEmpty) {
+
+                    /*Making a new Firestore documment, sending the hour as the code,
+                    and the message and user that sent it
+                    */
 
                     messages
                         .doc(year+month+day+hour+minute+second)

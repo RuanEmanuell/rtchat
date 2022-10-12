@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+//Widgets used on the login and create account screens
+
 class Logo extends StatelessWidget {
   Logo({this.height, this.width});
 
